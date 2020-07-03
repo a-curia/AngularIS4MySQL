@@ -17,5 +17,15 @@ namespace AngularIS4MySQL.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+
     }
 }

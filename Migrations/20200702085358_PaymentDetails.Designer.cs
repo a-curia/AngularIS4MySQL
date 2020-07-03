@@ -3,18 +3,20 @@ using System;
 using AngularIS4MySQL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AngularIS4MySQL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200702085358_PaymentDetails")]
+    partial class PaymentDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("AngularIS4MySQL.Models.ApplicationUser", b =>
@@ -81,44 +83,6 @@ namespace AngularIS4MySQL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("AngularIS4MySQL.Models.Order", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.OrderItem", b =>
-                {
-                    b.Property<int>("OrderItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Orderid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderItemId");
-
-                    b.HasIndex("Orderid");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
-                });
-
             modelBuilder.Entity("AngularIS4MySQL.Models.PaymentDetail", b =>
                 {
                     b.Property<int>("PMId")
@@ -144,84 +108,6 @@ namespace AngularIS4MySQL.Migrations
                     b.HasKey("PMId");
 
                     b.ToTable("PaymentDetails");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Product", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
-                        .HasMaxLength(50);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("ProductCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId");
-
-                    b.HasIndex("ProductCategoryId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.ProductCategory", b =>
-                {
-                    b.Property<int>("ProductCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
-                        .HasMaxLength(50);
-
-                    b.HasKey("ProductCategoryId");
-
-                    b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Sale", b =>
-                {
-                    b.Property<int>("SaleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int?>("Orderid")
-                        .HasColumnType("int");
-
-                    b.HasKey("SaleId");
-
-                    b.HasIndex("Orderid");
-
-                    b.ToTable("Sales");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Stock", b =>
-                {
-                    b.Property<int>("StockId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("StockId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Stocks");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -436,44 +322,6 @@ namespace AngularIS4MySQL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.OrderItem", b =>
-                {
-                    b.HasOne("AngularIS4MySQL.Models.Order", null)
-                        .WithMany("OrderItems")
-                        .HasForeignKey("Orderid");
-
-                    b.HasOne("AngularIS4MySQL.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Product", b =>
-                {
-                    b.HasOne("AngularIS4MySQL.Models.ProductCategory", "productCategory")
-                        .WithMany()
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Sale", b =>
-                {
-                    b.HasOne("AngularIS4MySQL.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("Orderid");
-                });
-
-            modelBuilder.Entity("AngularIS4MySQL.Models.Stock", b =>
-                {
-                    b.HasOne("AngularIS4MySQL.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
